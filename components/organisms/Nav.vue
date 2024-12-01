@@ -1,10 +1,8 @@
 <script setup lang="ts">
-  const links = ref([
-      'Characters', 'Clans', 'Kara', 'Kekkeigenkai', 'Tailed Beasts',
-      'Teams', 'Villages', 'Akatsuki'
-  ])
-
-  const { activeCategory } = useCategory();
+  import useCategories from '@/stores/categories'
+  
+  const categories = useCategories()
+  const { activeCategory, links } = storeToRefs(categories)
 
   let isMounted = ref(false);
 
