@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  import useCategories from '@/stores/categories'
-  
-  const categories = useCategories()
-  const { data } = storeToRefs(categories)
+import useCategories from '@/stores/categories'
+
+const categories = useCategories()
+const { data } = storeToRefs(categories)
 </script>
 
 <template>
@@ -12,10 +12,10 @@
 </template>
 
 <style scoped>
-  div.items {
-    width: 100vw;
-    height: 100%;
-    overflow: hidden;
-    @apply bg-stone-900;
-  }
+div.items {
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+  @apply bg-stone-900;
+}
 </style>

@@ -1,27 +1,25 @@
 <script setup lang="ts">
-  import useCategories from '@/stores/categories'
-  
-  const categories = useCategories()
-  const { activeCategory, links } = storeToRefs(categories)
+import useCategories from '@/stores/categories'
 
-  let isMounted = ref(false);
+const categories = useCategories()
+const { activeCategory, links } = storeToRefs(categories)
 
-  onMounted(() => {
-    isMounted.value = true;
-  });
+let isMounted = ref(false)
 
-  
+onMounted(() => {
+  isMounted.value = true
+})
 </script>
 
 <template>
   <nav>
     <ul>
       <li
-        v-for='link in links'
-        :key='link'
+        v-for="link in links"
+        :key="link"
         class="link"
-        :class='{ active: isMounted && activeCategory === link }'
-        @click='activeCategory = link'
+        :class="{ active: isMounted && activeCategory === link }"
+        @click="activeCategory = link"
       >
         {{ link }}
       </li>
@@ -30,25 +28,25 @@
 </template>
 
 <style scoped>
-  nav {
-    width: 300px;
-    @apply bg-stone-900 text-stone-200;
-    @apply p-10;
-  }
+nav {
+  width: 300px;
+  @apply bg-stone-900 text-stone-200;
+  @apply p-10;
+}
 
-  li {
-    cursor: pointer;
-    @apply tracking-wider;
-    @apply p-4
-  }
+li {
+  cursor: pointer;
+  @apply tracking-wider;
+  @apply p-4;
+}
 
-  li:hover {
-    @apply bg-stone-700;
-    @apply rounded;
-  }
+li:hover {
+  @apply bg-stone-700;
+  @apply rounded;
+}
 
-  .active {
-    @apply border-solid border-r-4 border-yellow-400;
-    @apply font-black text-yellow-400;
-  }
+.active {
+  @apply border-solid border-r-4 border-yellow-400;
+  @apply font-black text-yellow-400;
+}
 </style>

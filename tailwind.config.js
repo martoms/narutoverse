@@ -4,14 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': 'orange' 
+        primary: 'orange',
       },
       fontFamily: {
-        'primary': 'Poppins',
-        'secondary': 'Edu AU VIC WA NT Pre'
-      }
-    }
+        primary: 'Poppins',
+        secondary: 'Edu AU VIC WA NT Pre',
+      },
+    },
   },
   plugins: [],
 }
-

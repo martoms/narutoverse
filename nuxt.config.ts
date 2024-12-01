@@ -2,14 +2,14 @@
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
   build: {
-    transpile: ['vuetify']
+    transpile: ['vuetify'],
   },
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      api: process.env.NUXT_API_URL
-    }
+      api: process.env.NUXT_API_URL,
+    },
   },
   modules: [
     (_options, nuxt) => {
@@ -20,13 +20,13 @@ export default defineNuxtConfig({
     },
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
   ],
   vite: {
     vue: {
       template: {
         transformAssetUrls,
-      }
-    }
-  }
+      },
+    },
+  },
 })
