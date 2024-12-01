@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import { useRuntimeConfig } from '#app'
+import type { Categories } from '@/types/category'
 
-const useCategories = defineStore('categories', () => {
+const useCategoriesStore = defineStore('categories', () => {
   const API = useRuntimeConfig().public.api
   const activeCategory = useStorage('activeCategory', 'Characters')
-  const links = ref([
+  const categories = ref<Categories[]>([
     'Characters',
     'Clans',
     'Kara',
@@ -13,7 +14,7 @@ const useCategories = defineStore('categories', () => {
     'Tailed Beasts',
     'Teams',
     'Villages',
-    'Akatsuki',
+    'Akatsuki'
   ])
   const data = ref({})
   const resource = computed(() => {
@@ -64,9 +65,9 @@ const useCategories = defineStore('categories', () => {
   return {
     // states
     activeCategory,
-    links,
+    categories,
     data,
   }
 })
 
-export default useCategories
+export default useCategoriesStore

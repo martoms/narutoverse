@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import useCategories from '@/stores/categories'
+import useCategoriesStore from '@/stores/categories'
 
-const categories = useCategories()
-const { activeCategory, links } = storeToRefs(categories)
+const categoriesStore = useCategoriesStore()
+const { activeCategory, categories } = storeToRefs(categoriesStore)
 
 let isMounted = ref(false)
 
@@ -15,13 +15,13 @@ onMounted(() => {
   <nav>
     <ul>
       <li
-        v-for="link in links"
-        :key="link"
-        class="link"
-        :class="{ active: isMounted && activeCategory === link }"
-        @click="activeCategory = link"
+        v-for="category in categories"
+        :key="category"
+        class="category"
+        :class="{ active: isMounted && activeCategory === category }"
+        @click="activeCategory = category"
       >
-        {{ link }}
+        {{ category }}
       </li>
     </ul>
   </nav>

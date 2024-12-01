@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import useCategories from '@/stores/categories'
+import useCategoriesStore from '@/stores/categories'
 
-const categories = useCategories()
-const { data } = storeToRefs(categories)
+const categoriesStore = useCategoriesStore()
+const { data } = storeToRefs(categoriesStore)
 </script>
 
 <template>
