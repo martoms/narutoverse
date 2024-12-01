@@ -4,9 +4,11 @@ import useCategoriesStore from '@/stores/categories'
 const categoriesStore = useCategoriesStore()
 const { data: d } = storeToRefs(categoriesStore)
 
-const data = ref<Data>()
+const data = ref<Data | {}>()
 
-onMounted(() => data.value = d.value)
+onMounted(() => {
+  watch(d, () => data.value = d.value, { immediate: true })
+})
 </script>
 
 <template>

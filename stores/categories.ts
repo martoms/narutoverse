@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia'
-import { useStorage } from '@vueuse/core'
 import { useRuntimeConfig } from '#app'
-import { z } from 'zod'
 import { DataSchema } from '@/schemas/category.schema'
 import type { Categories, Data } from '@/types/category'
 
@@ -18,7 +16,7 @@ const useCategoriesStore = defineStore('categories', () => {
     'Villages',
     'Akatsuki'
   ])
-  const data = ref<Data>()
+  const data = ref<Data | {}>({})
   const isPending = ref(false)
   const error = ref<Error | null>(null)
   const resource = computed(() => {
@@ -55,26 +53,31 @@ const useCategoriesStore = defineStore('categories', () => {
   const url = computed(() => `${API}/${resource.value}`)
 
   watch(
-    resource,
-    async () => {
-      isPending.value = true
-
-      const { error, data: d } = await useFetch(url.value, { key: resource.value })
-
-      if (error.value) {
-        error.value = new Error('Failed to fetch data')
-      } else {
-        const parsedData = DataSchema.safeParse(d.value)
-
-        if (parsedData.success) {
-          data.value = parsedData.data
-        }
-      }
-
-      isPending.value = false
-    },
-    { immediate: true },
+    activeCategory, () => fetchData(),
+    { immediate: true }
   )
+
+  async function fetchData () {
+    isPending.value = true
+
+    const { error, data: d } = await useFetch(url.value)
+
+    if (error.value) {
+      error.value = new Error('Failed to fetch data')
+    } else {
+      const parsedData = DataSchema.safeParse(d.value)
+
+      if (parsedData.success) {
+          data.value = parsedData.data
+      } else {
+          data.value = {}
+          console.log('fsdfsdf')
+          console.log('data.value', data.value)
+      }
+    }
+
+    isPending.value = false
+  }
 
   return {
     // states

@@ -9,7 +9,7 @@ let isMounted = ref(false)
 
 onMounted(() => {
   isMounted.value = true
-  activeCategory.value = useStorage('activeCategory', 'Characters')
+  // activeCategory.value = useStorage('activeCategory', 'Characters')
 })
 </script>
 
