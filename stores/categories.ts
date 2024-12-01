@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
 import { useStorage } from '@vueuse/core'
 import { useRuntimeConfig } from '#app'
-import type { Categories } from '@/types/category'
+import { z } from 'zod'
+import { DataSchema } from '@/schemas/category.schema'
+import type { Categories, Data } from '@/types/category'
 
 const useCategoriesStore = defineStore('categories', () => {
   const API = useRuntimeConfig().public.api
-  const activeCategory = useStorage('activeCategory', 'Characters')
+  const activeCategory = useStorage<Categories>('activeCategory', 'Characters')
   const categories = ref<Categories[]>([
     'Characters',
     'Clans',
@@ -16,7 +18,9 @@ const useCategoriesStore = defineStore('categories', () => {
     'Villages',
     'Akatsuki'
   ])
-  const data = ref({})
+  const data = ref<Data>()
+  const isPending = ref(false)
+  const error = ref<Error | null>(null)
   const resource = computed(() => {
     let res
     switch (activeCategory.value) {
@@ -38,7 +42,7 @@ const useCategoriesStore = defineStore('categories', () => {
       case 'Teams':
         res = 'team'
         break
-      case 'Village':
+      case 'Villages':
         res = 'village'
         break
       case 'Akatsuki':
@@ -53,11 +57,21 @@ const useCategoriesStore = defineStore('categories', () => {
   watch(
     resource,
     async () => {
+      isPending.value = true
+
       const { error, data: d } = await useFetch(url.value, { key: resource.value })
 
-      if (!error.value) {
-        data.value = d.value
+      if (error.value) {
+        error.value = new Error('Failed to fetch data')
+      } else {
+        const parsedData = DataSchema.safeParse(d.value)
+
+        if (parsedData.success) {
+          data.value = parsedData.data
+        }
       }
+
+      isPending.value = false
     },
     { immediate: true },
   )
@@ -67,6 +81,8 @@ const useCategoriesStore = defineStore('categories', () => {
     activeCategory,
     categories,
     data,
+    isPending,
+    error
   }
 })
 

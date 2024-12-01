@@ -1,4 +1,5 @@
 import { z } from 'zod'
-import { CategoriesSchema } from '@/schemas/category.schema'
+import { CategoriesSchema, DataSchema } from '@/schemas/category.schema'
 
 export type Categories = z.infer<typeof CategoriesSchema>
+export type Data = z.infer<typeof DataSchema>
