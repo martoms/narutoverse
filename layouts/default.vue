@@ -3,15 +3,17 @@
 </script>
 
 <template>
-  <header>
-    <h1>NARUTOVERSE</h1>
-  </header>
-  <div class="container">
-    <OrganismsNav />
-    <main>
-      <slot></slot>
-    </main>
-  </div>
+  <v-app>
+    <header>
+      <h1>NARUTOVERSE</h1>
+    </header>
+    <div class="container">
+      <OrganismsNav />
+      <main>
+        <slot></slot>
+      </main>
+    </div>
+  </v-app>
 </template>
 
 <style scoped>
