@@ -7,7 +7,7 @@ import type { Categories, Data } from '@/types/category'
 
 const useCategoriesStore = defineStore('categories', () => {
   const API = useRuntimeConfig().public.api
-  const activeCategory = useStorage<Categories>('activeCategory', 'Characters')
+  const activeCategory = ref<Categories>('Characters')
   const categories = ref<Categories[]>([
     'Characters',
     'Clans',

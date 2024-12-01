@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStorage } from '@vueuse/core'
 import useCategoriesStore from '@/stores/categories'
 
 const categoriesStore = useCategoriesStore()
@@ -8,6 +9,7 @@ let isMounted = ref(false)
 
 onMounted(() => {
   isMounted.value = true
+  activeCategory.value = useStorage('activeCategory', 'Characters')
 })
 </script>
 
