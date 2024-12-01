@@ -25,8 +25,6 @@ const useCategories = defineStore('categories', () => {
         return res
     })
 
-    
-
     const url = computed(() => `${API}/${resource.value}`)
 
     watch(resource, async () => {
