@@ -1,11 +1,11 @@
-import { defineStore } from 'pinia'
-import { useRuntimeConfig } from '#app'
-import { DataSchema } from '@/schemas/category.schema'
-import type { Categories, Data } from '@/types/category'
+import { defineStore } from 'pinia';
+import { useRuntimeConfig } from '#app';
+import { DataSchema } from '@/schemas/category.schema';
+import type { Categories, Data } from '@/types/category';
 
 const useCategoriesStore = defineStore('categories', () => {
-  const API = useRuntimeConfig().public.api
-  const activeCategory = ref<Categories>('Characters')
+  const API = useRuntimeConfig().public.api;
+  const activeCategory = ref<Categories>('Characters');
   const categories = ref<Categories[]>([
     'Characters',
     'Clans',
@@ -14,79 +14,64 @@ const useCategoriesStore = defineStore('categories', () => {
     'Tailed Beasts',
     'Teams',
     'Villages',
-    'Akatsuki'
-  ])
-  const data = ref<Data | {}>({})
-  const isPending = ref(false)
-  const error = ref<Error | null>(null)
+    'Akatsuki',
+  ]);
+  const data = ref<Data | null>(null);
+  const isPending = ref(false);
+  const error = ref<Error | null>(null);
+
   const resource = computed(() => {
-    let res
     switch (activeCategory.value) {
-      case 'Characters':
-        res = 'character'
-        break
-      case 'Clans':
-        res = 'clan'
-        break
-      case 'Kara':
-        res = 'kara'
-        break
-      case 'Kekkeigenkai':
-        res = 'kekkei-genkai'
-        break
-      case 'Tailed Beasts':
-        res = 'tailed-beast'
-        break
-      case 'Teams':
-        res = 'team'
-        break
-      case 'Villages':
-        res = 'village'
-        break
-      case 'Akatsuki':
-        res = 'akatsuki'
-        break
+      case 'Characters': return 'character';
+      case 'Clans': return 'clan';
+      case 'Kara': return 'kara';
+      case 'Kekkeigenkai': return 'kekkei-genkai';
+      case 'Tailed Beasts': return 'tailed-beast';
+      case 'Teams': return 'team';
+      case 'Villages': return 'village';
+      case 'Akatsuki': return 'akatsuki';
     }
-    return res
-  })
+  });
 
-  const url = computed(() => `${API}/${resource.value}`)
+  const url = computed(() => `${API}/${resource.value}`);
 
-  watch(
-    activeCategory, () => fetchData(),
-    { immediate: true }
-  )
+  const { data: initialData, error: fetchError } = useFetch(url.value);
 
-  async function fetchData () {
+  watch(activeCategory, () => fetchData(), { immediate: true })
+
+  async function fetchData() {
     isPending.value = true
+    error.value = null
 
-    const { error, data: d } = await useFetch(url.value)
-
-    if (error.value) {
-      error.value = new Error('Failed to fetch data')
-    } else {
-      const parsedData = DataSchema.safeParse(d.value)
+    try {
+      const response = await $fetch(url.value);
+      const parsedData = DataSchema.safeParse(response);
 
       if (parsedData.success) {
-          data.value = parsedData.data
+        data.value = parsedData.data;
       } else {
-          data.value = {}
-          console.log('fsdfsdf')
-          console.log('data.value', data.value)
+        data.value = null
       }
+    } catch (err) {
+      error.value = new Error('Failed to fetch data');
+      console.error(err);
+    } finally {
+      isPending.value = false;
     }
+  }
 
-    isPending.value = false
+  if (!fetchError.value && initialData.value) {
+    data.value = DataSchema.parse(initialData.value);
   }
 
   return {
-    // states
     activeCategory,
     categories,
     data,
     isPending,
-    error
-  }
-})
+    error,
+    fetchData
+  };
+});
 
-export default useCategoriesStore
+export default useCategoriesStore;
