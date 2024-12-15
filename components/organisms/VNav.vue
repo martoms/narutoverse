@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStorage } from '@vueuse/core'
+// import { useStorage } from '@vueuse/core'
 import useCategoriesStore from '@/stores/categories'
 
 const categoriesStore = useCategoriesStore()

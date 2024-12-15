@@ -16,7 +16,7 @@ const useCategoriesStore = defineStore('categories', () => {
     'Villages',
     'Akatsuki',
   ]);
-  const data = ref<Data | null>(null);
+  const data = ref<Data>(null);
   const isPending = ref(false);
   const error = ref<Error | null>(null);
 

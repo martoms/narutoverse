@@ -11,4 +11,11 @@ export default [
   ...tseslint.configs.recommended,
   ...pluginVue.configs['flat/essential'],
   { files: ['**/*.vue'], languageOptions: { parserOptions: { parser: tseslint.parser } } },
+  {
+    "extends": ["@nuxt/eslint-config"],
+    "rules": {
+      "no-undef": "off"
+    }
+  }
+  
 ]

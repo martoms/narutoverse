@@ -6,7 +6,7 @@
       <h1>NARUTOVERSE</h1>
     </header>
     <div class="container">
-      <OrganismsNav />
+      <OrganismsVNav />
       <main>
         <slot></slot>
       </main>

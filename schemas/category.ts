@@ -22,9 +22,17 @@ export const ToolsSchema = z.array(z.string()).optional()
 export const RankSchema = z.any().optional()
 export const PersonalSchema = z.record(z.string(), z.any()).optional()
 
-export const CharacterSchema = z.object({
+export const BasicCategorychema = z.object({
   id: z.number(),
-  name: z.string(),
+  name: z.string()
+})
+
+export const BasicDataSchema = z.object({
+  currentPage: z.number(),
+  pageSize: z.number()
+})
+
+export const CharacterSchema = BasicCategorychema.extend({
   images: ImagesSchema,
   debut: DebutSchema,
   personal: PersonalSchema,
@@ -35,9 +43,7 @@ export const CharacterSchema = z.object({
   voiceActors: VoiceActorsSchema
 })
 
-export const ClanSchema = z.object({
-  id: z.number(),
-  name: z.string(),
+export const ClanSchema = BasicCategorychema.extend({
   image: z.array(z.string().url()).optional(),
   characters: z.array(CharacterSchema)
 })
@@ -47,23 +53,25 @@ export const KaraSchema = CharacterSchema.extend({
   rank: RankSchema
 })
 
+export const KekkeiGenkaiSchema = BasicCategorychema.extend({
+  characters: z.array(CharacterSchema)
+})
+
 export const DataSchema = z.union([
-  z.object({
-    currentPage: z.number(),
-    pageSize: z.number(),
+  BasicDataSchema.extend({
     totalCharacters: z.number(),
     characters: z.array(CharacterSchema)
   }),
-  z.object({
-    currentPage: z.number(),
-    pageSize: z.number(),
+  BasicDataSchema.extend({
     totalClans: z.number(),
     clans: z.array(ClanSchema)
   }),
-  z.object({
-    currentPage: z.number(),
-    pageSize: z.number(),
+  BasicDataSchema.extend({
     totalKara: z.number(),
     kara: z.array(KaraSchema)
+  }),
+  BasicDataSchema.extend({
+    totalKekkeiGenkai: z.number(),
+    kekkeigenkai: z.array(KekkeiGenkaiSchema)
   })
-])
+]).nullish()
