@@ -57,6 +57,10 @@ export const KekkeiGenkaiSchema = BasicCategorychema.extend({
   characters: z.array(CharacterSchema)
 })
 
+export const TailedBeastSchema = CharacterSchema.extend({
+  voiceActors: VoiceActorsSchema
+})
+
 export const DataSchema = z.union([
   BasicDataSchema.extend({
     totalCharacters: z.number(),
@@ -73,5 +77,9 @@ export const DataSchema = z.union([
   BasicDataSchema.extend({
     totalKekkeiGenkai: z.number(),
     kekkeigenkai: z.array(KekkeiGenkaiSchema)
+  }),
+  BasicDataSchema.extend({
+    totalTailedBeasts: z.number(),
+    tailedBeasts: z.array(TailedBeastSchema)
   })
 ]).nullish()
