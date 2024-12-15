@@ -26,12 +26,10 @@ export const BasicCategorychema = z.object({
   id: z.number(),
   name: z.string()
 })
-
 export const BasicDataSchema = z.object({
   currentPage: z.number(),
   pageSize: z.number()
 })
-
 export const CharacterSchema = BasicCategorychema.extend({
   images: ImagesSchema,
   debut: DebutSchema,
@@ -42,28 +40,23 @@ export const CharacterSchema = BasicCategorychema.extend({
   uniqueTraits: UniqueTraitsSchema,
   voiceActors: VoiceActorsSchema
 })
-
 export const ClanSchema = BasicCategorychema.extend({
   image: z.array(z.string().url()).optional(),
   characters: z.array(CharacterSchema)
 })
-
 export const KaraSchema = CharacterSchema.extend({
   tools: ToolsSchema,
   rank: RankSchema
 })
-
 export const KekkeiGenkaiSchema = BasicCategorychema.extend({
   characters: z.array(CharacterSchema)
 })
-
 export const TailedBeastSchema = CharacterSchema.extend({
   voiceActors: VoiceActorsSchema
 })
-
 export const TeamsSchema = KekkeiGenkaiSchema
-
 export const VillagesSchema = KekkeiGenkaiSchema
+export const AkatsukiSchema = CharacterSchema
 
 export const DataSchema = z.union([
   BasicDataSchema.extend({
@@ -93,5 +86,9 @@ export const DataSchema = z.union([
   BasicDataSchema.extend({
     totalVillages: z.number(),
     villages: z.array(VillagesSchema)
+  }),
+  BasicDataSchema.extend({
+    totalMembers: z.number(),
+    akatsuki: z.array(AkatsukiSchema)
   })
 ]).nullish()
