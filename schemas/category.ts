@@ -63,6 +63,8 @@ export const TailedBeastSchema = CharacterSchema.extend({
 
 export const TeamsSchema = KekkeiGenkaiSchema
 
+export const VillagesSchema = KekkeiGenkaiSchema
+
 export const DataSchema = z.union([
   BasicDataSchema.extend({
     totalCharacters: z.number(),
@@ -87,5 +89,9 @@ export const DataSchema = z.union([
   BasicDataSchema.extend({
     totalTeams: z.number(),
     teams: z.array(TeamsSchema)
+  }),
+  BasicDataSchema.extend({
+    totalVillages: z.number(),
+    villages: z.array(VillagesSchema)
   })
 ]).nullish()
