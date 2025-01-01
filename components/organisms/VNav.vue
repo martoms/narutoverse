@@ -1,6 +1,6 @@
 <template>
   <nav class="p-10 bg-secondary text-light">
-    <ul>
+    <ul class="pt-10">
       <li
         v-for="category in categories"
         :key="category"
