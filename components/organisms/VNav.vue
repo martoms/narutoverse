@@ -8,7 +8,7 @@
         @click="activeCategory = category"
         class="tracking-wider p-4 cursor-pointer hover:bg-secondary hover:rounded"
       >
-        {{ category }}
+        <AtomsVButton>{{ category }}</AtomsVButton>
       </li>
     </ul>
   </nav>
