@@ -1,7 +1,9 @@
 <template>
   <div class="flex flex-col h-screen overflow-hidden">
     <header class="flex justify-center items-center h-20 bg-primary">
-      <h1 class="tracking-[0.5rem] text-2xl font-bold text-primary">NARUTOVERSE</h1>
+      <AtomsVText tag="h1" class="tracking-[0.5rem] text-primary uppercase">
+        Narutoverse
+      </AtomsVText>
     </header>
     <div class="flex h-full width-screen">
       <OrganismsVNav class="w-2/12" />
@@ -11,5 +13,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts"></script>
