@@ -1,15 +1,15 @@
 <template>
-  <div class="flex flex-col h-screen overflow-hidden">
-    <header class="flex justify-center items-center h-20 bg-primary">
+  <div class="flex flex-col h-screen">
+    <header class="flex shrink-0 justify-center items-center h-[5rem] bg-primary">
       <AtomsVText tag="h1" class="tracking-[0.5rem] text-primary uppercase">
         Narutoverse
       </AtomsVText>
     </header>
-    <div class="flex h-full width-screen">
-      <OrganismsVNav class="w-2/12" />
-      <main class="w-10/12">
+    <main class="flex grow width-full overflow-hidden">
+      <OrganismsVNav class="h-full w-2/12" />
+      <div class="w-10/12">
         <slot></slot>
-      </main>
-    </div>
+      </div>
+    </main>
   </div>
 </template>

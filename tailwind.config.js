@@ -12,10 +12,14 @@ export default {
       backgroundColor: {
         primary: colors.stone[950],
         secondary: colors.stone[900],
+        tertiary: colors.stone[800],
       },
       fontFamily: {
         primary: 'Poppins',
         secondary: 'Edu AU VIC WA NT Pre',
+      },
+      boxShadow: {
+        glow: '0 0 20px rgba(255, 213, 0, 0.1)',
       },
     },
   },
