@@ -1,19 +1,3 @@
-<script setup lang="ts">
-import { useStorage } from '@vueuse/core'
-import useCategoriesStore from '@/stores/categories'
-import type { Categories } from '@/types/category'
-
-const categoriesStore = useCategoriesStore()
-const { activeCategory, categories } = storeToRefs(categoriesStore)
-
-let isMounted = ref(false)
-
-onMounted(() => {
-  isMounted.value = true
-  activeCategory.value = useStorage<Categories>('activeCategory', 'Characters').value
-})
-</script>
-
 <template>
   <nav>
     <ul>
@@ -29,6 +13,22 @@ onMounted(() => {
     </ul>
   </nav>
 </template>
+
+<script lang="ts" setup>
+import { useStorage } from '@vueuse/core'
+import useCategoriesStore from '@/stores/categories'
+import type { Categories } from '@/types/category'
+
+const categoriesStore = useCategoriesStore()
+const { activeCategory, categories } = storeToRefs(categoriesStore)
+
+let isMounted = ref(false)
+
+onMounted(() => {
+  isMounted.value = true
+  activeCategory.value = useStorage<Categories>('activeCategory', 'Characters').value
+})
+</script>
 
 <style scoped>
 nav {

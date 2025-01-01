@@ -1,3 +1,9 @@
+<template>
+  <div class="items">
+    {{ data }}
+  </div>
+</template>
+
 <script lang="ts" setup>
 import useCategoriesStore from '@/stores/categories'
 import type { Data } from '@/types/category'
@@ -11,12 +17,6 @@ onMounted(() => {
   watch(d, () => data.value = d.value, { immediate: true })
 })
 </script>
-
-<template>
-  <div class="items">
-    {{ data }}
-  </div>
-</template>
 
 <style scoped>
 div.items {

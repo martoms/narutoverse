@@ -1,18 +1,16 @@
-<script setup lang="ts"></script>
-
 <template>
-  <v-app>
-    <header>
-      <h1>NARUTOVERSE</h1>
-    </header>
-    <div class="container">
-      <OrganismsVNav />
-      <main>
-        <slot></slot>
-      </main>
-    </div>
-  </v-app>
+  <header>
+    <h1>NARUTOVERSE</h1>
+  </header>
+  <div class="container">
+    <OrganismsVNav />
+    <main>
+      <slot></slot>
+    </main>
+  </div>
 </template>
+
+<script setup lang="ts"></script>
 
 <style scoped>
 header {
