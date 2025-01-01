@@ -1,12 +1,12 @@
 <template>
-  <nav class="p-10 bg-stone-900 text-stone-200">
+  <nav class="p-10 bg-secondary text-light">
     <ul>
       <li
         v-for="category in categories"
         :key="category"
         :class="{ [getActiveStyle]: isMounted && activeCategory === category }"
         @click="activeCategory = category"
-        class="tracking-wider p-4 cursor-pointer hover:bg-stone-700 hover:rounded"
+        class="tracking-wider p-4 cursor-pointer hover:bg-secondary hover:rounded"
       >
         {{ category }}
       </li>
@@ -24,7 +24,7 @@ const { activeCategory, categories } = storeToRefs(categoriesStore)
 
 let isMounted = ref(false)
 
-const getActiveStyle = 'border-solid border-r-4 border-yellow-400 font-black text-yellow-400'
+const getActiveStyle = 'border-solid border-r-4 border-primary font-black text-primary'
 
 onMounted(() => {
   isMounted.value = true

@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full w-full overflow-hidden bg-stone-900">
-    
+  <div class="h-full w-full overflow-hidden bg-secondary">
+
   </div>
 </template>
 

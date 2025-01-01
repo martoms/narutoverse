@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col h-screen overflow-hidden">
-    <header class="flex justify-center items-center h-20 bg-stone-950">
-      <h1 class="tracking-[0.5rem] text-2xl font-bold text-yellow-400">NARUTOVERSE</h1>
+    <header class="flex justify-center items-center h-20 bg-primary">
+      <h1 class="tracking-[0.5rem] text-2xl font-bold text-primary">NARUTOVERSE</h1>
     </header>
     <div class="flex h-full width-screen">
       <OrganismsVNav class="w-2/12" />
