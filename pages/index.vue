@@ -1,6 +1,6 @@
 <template>
-  <div class="items">
-    {{ data }}
+  <div class="h-full w-full overflow-hidden bg-stone-900">
+    
   </div>
 </template>
 
@@ -17,12 +17,3 @@ onMounted(() => {
   watch(d, () => data.value = d.value, { immediate: true })
 })
 </script>
-
-<style scoped>
-div.items {
-  width: 100vw;
-  height: 100%;
-  overflow: hidden;
-  @apply bg-stone-900;
-}
-</style>
