@@ -13,6 +13,8 @@ export default {
         primary: colors.stone[950],
         secondary: colors.stone[900],
         tertiary: colors.stone[800],
+        accent: colors.amber[600],
+        'accent-hover': colors.amber[500],
       },
       fontFamily: {
         primary: 'Poppins',
