@@ -13,7 +13,7 @@
       @prev="activePage--"
       @next="activePage++"
     />
-    <MoleculesVSearch />
+    <MoleculesVSearch v-model="keyword" @submit="get(keyword)" />
   </div>
 </template>
 
@@ -61,6 +61,7 @@ const disableNext = computed(() => {
 
 const availablePages = ref<Array<number>>([])
 const activePage = ref<number>(1)
+const keyword = ref('')
 
 watch(activePage, () => {
   get(activePage.value)

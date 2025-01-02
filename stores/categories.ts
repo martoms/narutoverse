@@ -1,7 +1,8 @@
+import { z } from 'zod'
 import { defineStore } from 'pinia'
 import { useRuntimeConfig } from '#app'
-import { DataSchema } from '@/schemas/category'
-import type { Categories, Data } from '@/types/category'
+import { DataSchema, DataByNameSchema } from '@/schemas/category'
+import type { Categories, Data, DataByName } from '@/types/category'
 
 const useCategoriesStore = defineStore('categories', () => {
   const API = useRuntimeConfig().public.api
@@ -17,6 +18,7 @@ const useCategoriesStore = defineStore('categories', () => {
     'Akatsuki',
   ])
   const data = ref<Data>(null)
+  const dataByName = ref<DataByName | null>(null)
   const isPending = ref(false)
   const error = ref<Error | null>(null)
 
@@ -45,7 +47,11 @@ const useCategoriesStore = defineStore('categories', () => {
   const pageUrl = (page: number = 1) => `${baseUrl.value}?page=${page}&limit=21`
   const searchUrl = (keyword: string) => {
     const k = keyword.replace(/\s/g, '%20')
-    return `${baseUrl.value}/search?name=${k}`
+    const name = k
+      .split('%20')
+      .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+      .join('%20')
+    return `${baseUrl.value}/search?name=${name}`
   }
 
   const { data: initialData, error: fetchError } = useFetch(pageUrl())
@@ -61,17 +67,31 @@ const useCategoriesStore = defineStore('categories', () => {
   }
 
   async function fetchData(url: string) {
+    console.log(url)
     isPending.value = true
     error.value = null
 
     try {
       const response = await $fetch(url)
-      const parsedData = DataSchema.safeParse(response)
+      const RawDataSchema = z.union([DataSchema, DataByNameSchema])
+      const parsedData = RawDataSchema.safeParse(response)
 
       if (parsedData.success) {
-        data.value = parsedData.data
-      } else {
-        data.value = null
+        if (
+          typeof parsedData.data === 'object' &&
+          parsedData.data !== null &&
+          'currentPage' in parsedData.data
+        ) {
+          data.value = parsedData.data
+        } else if (
+          typeof parsedData.data === 'object' &&
+          parsedData.data !== null &&
+          'id' in parsedData.data
+        ) {
+          dataByName.value = parsedData.data
+        } else {
+          data.value = null
+        }
       }
     } catch (err) {
       error.value = new Error('Failed to fetch data')
@@ -89,6 +109,7 @@ const useCategoriesStore = defineStore('categories', () => {
     activeCategory,
     categories,
     data,
+    dataByName,
     isPending,
     error,
     fetchData,

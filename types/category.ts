@@ -10,6 +10,7 @@ import {
   TeamsSchema,
   VillagesSchema,
   AkatsukiSchema,
+  DataByNameSchema,
 } from '@/schemas/category'
 
 export type Categories = z.infer<typeof CategoriesSchema>
@@ -22,3 +23,4 @@ export type TailedBeast = z.infer<typeof TailedBeastSchema>
 export type Team = z.infer<typeof TeamsSchema>
 export type Village = z.infer<typeof VillagesSchema>
 export type Akatsuki = z.infer<typeof AkatsukiSchema>
+export type DataByName = z.infer<typeof DataByNameSchema>

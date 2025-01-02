@@ -98,3 +98,14 @@ export const DataSchema = z
     }),
   ])
   .nullish()
+
+export const DataByNameSchema = z.union([
+  CharacterSchema,
+  ClanSchema,
+  KaraSchema,
+  KekkeiGenkaiSchema,
+  TailedBeastSchema,
+  TeamsSchema,
+  VillagesSchema,
+  AkatsukiSchema,
+])
