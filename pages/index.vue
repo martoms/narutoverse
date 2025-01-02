@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-5 h-full w-full p-10 pt-5 overflow-hidden bg-secondary">
-    <OrganismsCurrentNavigation />
+    <OrganismsCurrentNavigation :data="data" />
     <div class="flex grow flex-wrap gap-10 justify-center w-full p-10 overflow-y-auto">
       <DataCard v-for="item in getItems" :key="item.id" :data="item" />
     </div>

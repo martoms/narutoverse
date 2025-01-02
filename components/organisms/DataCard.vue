@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col gap-2 items-center justify-center w-80 bg-tertiary p-5 py-8 rounded-lg cursor-pointer hover:scale-105 transition duration-300 ease-in-out hover:shadow-glow"
+    class="flex flex-col gap-2 items-center justify-center w-80 bg-tertiary p-5 py-8 rounded-lg cursor-pointer hover:scale-105 transition duration-300 ease-in-out"
   >
     <AtomsVText
       class="w-full text-center text-light text-lg font-semibold"
