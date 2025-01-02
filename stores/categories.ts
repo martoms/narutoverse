@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useRuntimeConfig } from '#app'
-import { DataSchema } from '~/schemas/category'
+import { DataSchema } from '@/schemas/category'
 import type { Categories, Data } from '@/types/category'
 
 const useCategoriesStore = defineStore('categories', () => {
