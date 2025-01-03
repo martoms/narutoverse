@@ -1,5 +1,7 @@
 <template>
-  <div class="flex items-center justify-between pb-5 border-solid border-b border-primary">
+  <div
+    class="flex flex-none items-center justify-between h-20 pb-5 border-solid border-b border-accent"
+  >
     <AtomsVText tag="h2" class="text-primary w-[190px] tracking-widest text-xl font-bold">
       {{ activeCategory }}
     </AtomsVText>
@@ -13,7 +15,7 @@
       @prev="activePage--"
       @next="activePage++"
     />
-    <MoleculesVSearch v-model="keyword" @submit="get(keyword)" />
+    <OrganismsDataSearch />
   </div>
 </template>
 
@@ -61,7 +63,6 @@ const disableNext = computed(() => {
 
 const availablePages = ref<Array<number>>([])
 const activePage = ref<number>(1)
-const keyword = ref('')
 
 watch(activePage, () => {
   get(activePage.value)

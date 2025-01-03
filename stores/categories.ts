@@ -1,3 +1,4 @@
+import { useStorage } from '@vueuse/core'
 import { z } from 'zod'
 import { defineStore } from 'pinia'
 import { useRuntimeConfig } from '#app'
@@ -6,7 +7,7 @@ import type { Categories, Data, DataByName } from '@/types/category'
 
 const useCategoriesStore = defineStore('categories', () => {
   const API = useRuntimeConfig().public.api
-  const activeCategory = ref<Categories>('Characters')
+  const activeCategory = useStorage<Categories>('activeCategory', 'Characters')
   const categories = ref<Categories[]>([
     'Characters',
     'Clans',
@@ -67,7 +68,6 @@ const useCategoriesStore = defineStore('categories', () => {
   }
 
   async function fetchData(url: string) {
-    console.log(url)
     isPending.value = true
     error.value = null
 
@@ -83,12 +83,14 @@ const useCategoriesStore = defineStore('categories', () => {
           'currentPage' in parsedData.data
         ) {
           data.value = parsedData.data
+          dataByName.value = null
         } else if (
           typeof parsedData.data === 'object' &&
           parsedData.data !== null &&
           'id' in parsedData.data
         ) {
           dataByName.value = parsedData.data
+          data.value = null
         } else {
           data.value = null
         }

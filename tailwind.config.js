@@ -8,9 +8,13 @@ export default {
       colors: {
         primary: colors.yellow[400],
         light: colors.stone[200],
+        neutral: colors.stone[500],
+        dark: colors.stone[900],
+        accent: colors.amber[600],
       },
       backgroundColor: {
         primary: colors.stone[950],
+        'primary-light': colors.yellow[400],
         secondary: colors.stone[900],
         tertiary: colors.stone[800],
         accent: colors.amber[600],
