@@ -20,6 +20,8 @@ const useCategoriesStore = defineStore('categories', () => {
   ])
   const data = ref<Data>(null)
   const dataByName = ref<DataByName | null>(null)
+  const directSearch = ref(false)
+  const keyword = ref('')
   const isPending = ref(false)
   const error = ref<Error | null>(null)
 
@@ -57,12 +59,23 @@ const useCategoriesStore = defineStore('categories', () => {
 
   const { data: initialData, error: fetchError } = useFetch(pageUrl())
 
-  watch(activeCategory, () => fetchData(pageUrl()), { immediate: true })
+  watch(
+    activeCategory,
+    () => {
+      if (!directSearch.value) {
+        fetchData(pageUrl())
+      }
+    },
+    { immediate: true },
+  )
 
   const get = async (payload: number | string) => {
     if (typeof payload === 'number') {
+      directSearch.value = false
       await fetchData(pageUrl(payload))
     } else {
+      directSearch.value = true
+      keyword.value = payload
       await fetchData(searchUrl(payload))
     }
   }
@@ -75,6 +88,9 @@ const useCategoriesStore = defineStore('categories', () => {
       const response = await $fetch(url)
       const RawDataSchema = z.union([DataSchema, DataByNameSchema])
       const parsedData = RawDataSchema.safeParse(response)
+
+      console.log('response', response)
+      console.log('parsedData', parsedData)
 
       if (parsedData.success) {
         if (
@@ -96,8 +112,14 @@ const useCategoriesStore = defineStore('categories', () => {
         }
       }
     } catch (err) {
-      error.value = new Error('Failed to fetch data')
-      console.error(err)
+      if (err instanceof Error) {
+        error.value = new Error('Failed to fetch data')
+        if (directSearch.value) {
+          if ('statusCode' in err) {
+            error.value = new Error('Does not exist')
+          }
+        }
+      }
     } finally {
       isPending.value = false
     }
@@ -112,6 +134,8 @@ const useCategoriesStore = defineStore('categories', () => {
     categories,
     data,
     dataByName,
+    directSearch,
+    keyword,
     isPending,
     error,
     fetchData,

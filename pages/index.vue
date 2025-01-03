@@ -1,20 +1,29 @@
 <template>
   <div class="flex flex-col gap-5 h-full w-full p-10 pt-5 overflow-hidden bg-secondary">
     <OrganismsCurrentNavigation :data="data" />
-    <div class="flex grow flex-wrap gap-10 justify-center w-full p-10 overflow-y-auto">
+    <div
+      v-if="!directSearch"
+      class="flex grow flex-wrap gap-10 justify-center w-full p-10 overflow-y-auto"
+    >
       <DataCard v-for="item in getItems" :key="item.id" :data="item" />
     </div>
+    <OrganismsDataSearchError v-else-if="directSearch && error" />
+    <div v-else>dfsdgdgds</div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import DataCharacter from '@/components/organisms/DataCharacter.vue'
 import useCategoriesStore from '@/stores/categories'
 import type { Data } from '@/types/category'
-import DataCard from '~/components/organisms/DataCard.vue'
+import DataCard from '@/components/organisms/DataCard.vue'
 
-const { data: d } = storeToRefs(useCategoriesStore())
+const { data: d, dataByName, directSearch, error } = storeToRefs(useCategoriesStore())
 
 const data = ref<Data>(null)
+const individualPage = {
+  characters: DataCharacter,
+}
 
 const getItems = computed(() => {
   if (typeof data.value === 'object' && data.value !== null) {

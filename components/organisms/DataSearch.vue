@@ -40,15 +40,16 @@
 <script setup lang="ts">
 import useCategoriesStore from '@/stores/categories'
 
-const { activeCategory, categories } = storeToRefs(useCategoriesStore())
+const { activeCategory, categories, keyword } = storeToRefs(useCategoriesStore())
 const { get } = useCategoriesStore()
 
-const keyword = ref('')
 const category = ref(activeCategory.value)
 const isFocused = ref(false)
 
 const handleSearch = () => {
-  activeCategory.value = category.value
   get(keyword.value)
+  activeCategory.value = category.value
 }
+
+watch(activeCategory, () => (category.value = activeCategory.value))
 </script>

@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 interface Props {
-  tag?: 'p' | 'h1' | 'h2'
+  tag?: 'p' | 'span' | 'h1' | 'h2'
 }
 
 const { tag = 'p' } = defineProps<Props>()
