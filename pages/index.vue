@@ -5,10 +5,12 @@
       v-if="!directSearch"
       class="flex grow flex-wrap gap-10 justify-center w-full p-10 overflow-y-auto"
     >
-      <DataCard v-for="item in getItems" :key="item.id" :data="item" />
+      <OrganismsDataCard v-for="item in getItems" :key="item.id" :data="item" />
     </div>
     <OrganismsDataSearchError v-else-if="directSearch && error" />
-    <div v-else>dfsdgdgds</div>
+    <template v-else>
+      <component v-if="dataByName" :is="individualPage[getComponent]" :data="dataByName" />
+    </template>
   </div>
 </template>
 
@@ -16,13 +18,14 @@
 import DataCharacter from '@/components/organisms/DataCharacter.vue'
 import useCategoriesStore from '@/stores/categories'
 import type { Data } from '@/types/category'
-import DataCard from '@/components/organisms/DataCard.vue'
+import DataCategory from '@/components/organisms/DataCategory.vue'
 
 const { data: d, dataByName, directSearch, error } = storeToRefs(useCategoriesStore())
 
 const data = ref<Data>(null)
 const individualPage = {
-  characters: DataCharacter,
+  character: DataCharacter,
+  category: DataCategory,
 }
 
 const getItems = computed(() => {
@@ -37,6 +40,13 @@ const getItems = computed(() => {
     if ('akatsuki' in data.value) return data.value.akatsuki
   }
   return []
+})
+
+const getComponent = computed(() => {
+  if (typeof dataByName.value === 'object' && dataByName.value !== null) {
+    if ('characters' in dataByName.value) return 'category'
+    else return 'character'
+  } else return 'character'
 })
 
 onMounted(() => {
