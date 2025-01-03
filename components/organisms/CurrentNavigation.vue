@@ -6,7 +6,7 @@
       {{ activeCategory }}
     </AtomsVText>
     <MoleculesVPagination
-      v-if="data?.pageSize < totalItems"
+      v-if="data?.pageSize < totalItems && !dataCharacter"
       :availablePages
       :activePage
       :disablePrev
@@ -29,7 +29,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const { activeCategory } = storeToRefs(useCategoriesStore())
+const { activeCategory, dataCharacter } = storeToRefs(useCategoriesStore())
 const { get } = useCategoriesStore()
 
 const totalItems = computed<number>(() => {

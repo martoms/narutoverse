@@ -2,8 +2,8 @@ import { useStorage } from '@vueuse/core'
 import { z } from 'zod'
 import { defineStore } from 'pinia'
 import { useRuntimeConfig } from '#app'
-import { DataSchema, DataByNameSchema } from '@/schemas/category'
-import type { Categories, Data, DataByName } from '@/types/category'
+import { DataSchema, DataCategorySchema } from '@/schemas/category'
+import type { Categories, Data, dataCategory, Character } from '@/types/category'
 
 const useCategoriesStore = defineStore('categories', () => {
   const API = useRuntimeConfig().public.api
@@ -19,7 +19,8 @@ const useCategoriesStore = defineStore('categories', () => {
     'Akatsuki',
   ])
   const data = ref<Data>(null)
-  const dataByName = ref<DataByName | null>(null)
+  const dataCategory = ref<dataCategory | null>(null)
+  const dataCharacter = ref<Character>()
   const directSearch = ref(false)
   const keyword = ref('')
   const isPending = ref(false)
@@ -86,7 +87,7 @@ const useCategoriesStore = defineStore('categories', () => {
 
     try {
       const response = await $fetch(url)
-      const RawDataSchema = z.union([DataSchema, DataByNameSchema])
+      const RawDataSchema = z.union([DataSchema, DataCategorySchema])
       const parsedData = RawDataSchema.safeParse(response)
 
       console.log('response', response)
@@ -99,13 +100,13 @@ const useCategoriesStore = defineStore('categories', () => {
           'currentPage' in parsedData.data
         ) {
           data.value = parsedData.data
-          dataByName.value = null
+          dataCategory.value = null
         } else if (
           typeof parsedData.data === 'object' &&
           parsedData.data !== null &&
           'id' in parsedData.data
         ) {
-          dataByName.value = parsedData.data
+          dataCategory.value = parsedData.data
           data.value = null
         } else {
           data.value = null
@@ -133,7 +134,8 @@ const useCategoriesStore = defineStore('categories', () => {
     activeCategory,
     categories,
     data,
-    dataByName,
+    dataCategory,
+    dataCharacter,
     directSearch,
     keyword,
     isPending,

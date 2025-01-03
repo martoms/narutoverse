@@ -19,7 +19,8 @@ import useCategoriesStore from '@/stores/categories'
 import type { Categories } from '@/types/category'
 
 const categoriesStore = useCategoriesStore()
-const { activeCategory, categories, directSearch, keyword } = storeToRefs(categoriesStore)
+const { dataCharacter, activeCategory, categories, directSearch, keyword } =
+  storeToRefs(categoriesStore)
 const { get } = useCategoriesStore()
 
 let isMounted = ref(false)
@@ -30,6 +31,7 @@ const handleClick = (category: Categories) => {
   if (category === activeCategory.value) get(1)
   activeCategory.value = category
   directSearch.value = false
+  dataCharacter.value = undefined
   keyword.value = ''
 }
 

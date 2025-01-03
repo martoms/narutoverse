@@ -99,7 +99,7 @@ export const DataSchema = z
   ])
   .nullish()
 
-export const DataByNameSchema = z.union([
+export const DataCategorySchema = z.union([
   CharacterSchema,
   ClanSchema,
   KaraSchema,

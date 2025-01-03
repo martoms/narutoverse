@@ -1,6 +1,7 @@
 <template>
   <div
     class="flex flex-col gap-2 items-center justify-center w-80 bg-tertiary p-5 py-8 rounded-lg cursor-pointer hover:scale-105 transition duration-300 ease-in-out"
+    @click="handleClick()"
   >
     <AtomsVText
       class="w-full text-center text-light text-lg font-semibold"
@@ -18,6 +19,10 @@
 </template>
 
 <script lang="ts" setup>
+import useCategoriesStore from '@/stores/categories'
+
+const { dataCharacter, dataCategory, directSearch } = storeToRefs(useCategoriesStore())
+
 import type {
   Character,
   Clan,
@@ -32,6 +37,13 @@ import type {
 interface Props {
   data: Character | Clan | Kara | KekkeiGenkai | TailedBeast | Team | Village | Akatsuki
 }
+const { data } = defineProps<Props>()
 
-defineProps<Props>()
+const handleClick = () => {
+  if ('characters' in data) {
+    dataCategory.value = data
+  } else dataCharacter.value = data
+
+  directSearch.value = true
+}
 </script>
