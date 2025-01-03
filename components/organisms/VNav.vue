@@ -15,6 +15,7 @@
 </template>
 
 <script lang="ts" setup>
+import slugify from 'slugify'
 import useCategoriesStore from '@/stores/categories'
 import type { Categories } from '@/types/category'
 
@@ -33,6 +34,7 @@ const handleClick = (category: Categories) => {
   directSearch.value = false
   dataCharacter.value = undefined
   keyword.value = ''
+  navigateTo(`/${slugify(category, { replacement: '-', lower: true })}`)
 }
 
 onMounted(() => (isMounted.value = true))
